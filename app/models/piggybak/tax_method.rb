@@ -1,3 +1,5 @@
+require "bigdecimal"
+
 module Piggybak
   class TaxMethod < ActiveRecord::Base
     has_many :tax_method_values, :dependent => :destroy
@@ -27,16 +29,16 @@ module Piggybak
     end
 
     def self.calculate_tax(object)
-      total_tax = 0
+      total_tax = BigDecimal.new 0
 
       TaxMethod.all.each do |tax_method|
         calculator = tax_method.klass.constantize
         if calculator.available?(tax_method, object)
-          total_tax += calculator.rate(tax_method, object)
+          total_tax += BigDecimal.new calculator.rate(tax_method, object)
         end 
       end
 
-      ((100*total_tax.to_f).to_i).to_f/(100.to_f)
+      total_tax.truncate 2
     end
 
     def admin_label
