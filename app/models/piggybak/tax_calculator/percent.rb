@@ -1,3 +1,5 @@
+require "bigdecimal"
+
 module Piggybak
   class TaxCalculator::Percent
     KEYS = ["state_id", "rate"]
@@ -15,17 +17,18 @@ module Piggybak
     end
 
     def self.rate(method, object)
-      taxable_total = object.subtotal
+      taxable_total = BigDecimal.new object.subtotal
       if object.is_a?(::Piggybak::Order)
         Piggybak.config.line_item_types.each do |k, v|
           if v.has_key?(:reduce_tax_subtotal) && v[:reduce_tax_subtotal]
-            taxable_total += object.send("#{k}_charge")
+            taxable_total += BigDecimal.new object.send("#{k}_charge")
           end
         end
       else
-        taxable_total += object.extra_data[:reduce_tax_subtotal].to_f
+        taxable_total += BidDecimal.new object.extra_data[:reduce_tax_subtotal]
       end
-      method.metadata.detect { |m| m.key == "rate" }.value.to_f * taxable_total
+      decimal_value = BigDecimal.new method.metadata.detect { |m| m.key == "rate" }.value 
+      decimal_value * taxable_total
     end
   end
 end
