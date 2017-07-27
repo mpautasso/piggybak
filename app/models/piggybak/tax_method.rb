@@ -38,7 +38,7 @@ module Piggybak
         end 
       end
 
-      total_tax.truncate 2
+      (total_tax.truncate 2).to_f
     end
 
     def admin_label
