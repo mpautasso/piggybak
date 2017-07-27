@@ -30,7 +30,7 @@ module Piggybak
       end
       address += "#{self.city}, #{self.state_display} #{self.zip}<br />"
       address += "#{self.country.name}"
-      address
+      address.html_safe
     end
     alias :display :admin_label  
 

@@ -130,6 +130,8 @@ module Piggybak
           navigation_label "Orders"
           weight 1
           object_label_method :admin_label
+          field :billing_address
+          field :shipping_address
 
           show do
             field :status
