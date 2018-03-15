@@ -25,7 +25,7 @@
 <div class="item">
 	<%= address.label :state_id %>
 	<% if address.object.country.states.any? -%>
-	<%= address.collection_select :state_id, address.object.country.states, :id, :name, { :selected => address.object.state_id.to_s }, :class => "required" %>
+	<%= address.collection_select :state_id, address.object.country.states, :id, :name, { prompt: 'Select State' }, :class => "required" %>
 	<% else -%>
 	<%= address.text_field :state_id, :class => "required" %>
 	<% end -%>
