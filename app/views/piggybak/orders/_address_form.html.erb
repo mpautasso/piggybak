@@ -23,14 +23,6 @@
   <%= address.collection_select :country_id, Piggybak::Country.send(type), :id, :name, { :selected => address.object.country_id.to_s }, :class => "required" %>
 </div>
 <div class="item">
-	<%= address.label :state_id %>
-	<% if address.object.country.states.any? -%>
-	<%= address.collection_select :state_id, address.object.country.states, :id, :name, { prompt: 'Select State' }, :class => "required" %>
-	<% else -%>
-	<%= address.text_field :state_id, :class => "required" %>
-	<% end -%>
-</div>
-<div class="item">
 	<%= address.label :zip %>
 	<%= address.text_field :zip, :class => "required" %>
 </div>
